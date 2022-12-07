@@ -10,7 +10,7 @@ const sucessCode = (res, data, message) => {
 const failCode = (res, data, message) => {
     res.status(400).json({
         message,
-        content, data
+        content: data
     });
 }
 //500

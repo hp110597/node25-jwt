@@ -99,6 +99,7 @@ const updateUser = async (req, res) => {
 //D => .destroy()
 
 const bcrypt = require("bcrypt");
+const { parseToken } = require("../middlewares/baseToken");
 //signup
 const signUp = async (req, res) => {
   try {
@@ -138,12 +139,12 @@ const login = async (req, res) => {
     if (checkLogin) {
       let checkPass = bcrypt.compareSync(password, checkLogin.password);
       if (checkPass) {
-        sucessCode(res, checkLogin,"Đăng nhập thành công");
+        sucessCode(res, parseToken(checkLogin),"Đăng nhập thành công");
       } else {
-        failCode(res, "", "mật khẩu không đúng");
+        failCode(res,"", "mật khẩu không đúng");
       }
     } else {
-      failCode(res, "", "Email không đúng");
+      failCode(res,"", "Email không đúng");
     }
   } catch (err) {
     errorCode(res, "Lỗi Backend");
@@ -157,4 +158,4 @@ module.exports = {
   updateUser,
   signUp,
   login,
-};
+}

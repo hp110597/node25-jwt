@@ -1,7 +1,29 @@
-const jwt =require ('jsonwebtoken')
+const jwt = require ('jsonwebtoken')
 
-let token = jwt.sign({data:'hello'},'bimat',{algorithm:"HS256",expiresIn:"10y"})
+ 
 
-jwt.verify
+//hàm tạo token
+const parseToken = (data) =>{
+let token = jwt.sign({data},'bimat',{algorithm:"HS256",expiresIn:"5y"})
+return token
+}
 
-console.log(token);
+//hàm check token
+
+const checkToken = (token) =>{
+   try{
+    let checkT =  jwt.verify(token,'bimat')
+
+    if(checkT){
+        return {checkData:true,message:""}
+    }
+   }catch(err){
+    console.log(err.message)
+    return {checkData:false,message:err.message}
+   }
+}
+
+module.exports = {
+    parseToken,
+    checkToken
+}
