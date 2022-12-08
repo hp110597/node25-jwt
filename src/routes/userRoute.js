@@ -20,7 +20,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage})
 
-const fs = require("fs")
+const fs = require("fs");
+const { checkToken, verifyToken } = require('../middlewares/baseToken');
 
 //upload base64
 userRoute.post("/upload_base",upload.single("dataUpload"),(req,res)=>{
@@ -54,13 +55,13 @@ userRoute.post("/upload",upload.single("dataUpload"),(req,res)=>{
 })
 
 //GET user
-userRoute.get("/getUser", getUser); 
+userRoute.get("/getUser",verifyToken, getUser); 
 
 //POST create user
-userRoute.post("/createUser", createUser);
+userRoute.post("/createUser",verifyToken, createUser);
 
 //PUT update user
-userRoute.put("/updateUser/:user_id", updateUser);
+userRoute.put("/updateUser/:user_id",verifyToken, updateUser);
 
 //Signup
 userRoute.post("/signup",signUp);

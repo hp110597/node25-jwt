@@ -102,7 +102,7 @@ const bcrypt = require("bcrypt");
 const { parseToken } = require("../middlewares/baseToken");
 //signup
 const signUp = async (req, res) => {
-  try {
+  // try {
     let { full_name, email, password } = req.body;
     //mã hóa password
     let passWordHash = bcrypt.hashSync(password, 10);
@@ -121,10 +121,10 @@ const signUp = async (req, res) => {
       });
       sucessCode(res, data, "Đăng kí thành công");
     }
-  } 
-  catch (err) {
-    errorCode(res, "Lỗi backend");
-  }
+  // } 
+  // catch (err) {
+  //   errorCode(res, "Lỗi backend");
+  // }
 };
 
 //login

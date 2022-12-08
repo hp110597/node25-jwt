@@ -16,6 +16,9 @@ const checkToken = (token) =>{
 
     if(checkT){
         return {checkData:true,message:""}
+    }else{
+        return {checkData:false,message:"Token không hợp lệ"}
+
     }
    }catch(err){
     console.log(err.message)
@@ -23,7 +26,18 @@ const checkToken = (token) =>{
    }
 }
 
+const verifyToken = (req,res,next)=>{
+    const {token} =req.headers
+    const verifyToken = checkToken(token)
+    if(verifyToken.checkData){
+        next()
+    }else{
+        res.status(401).send(verifyToken.message)
+    }
+}
+
 module.exports = {
     parseToken,
-    checkToken
+    checkToken,
+    verifyToken
 }
